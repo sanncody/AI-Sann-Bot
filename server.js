@@ -6,6 +6,7 @@ const { Server } = require('socket.io');
 
 const app = require("./src/app");
 const connectDB = require('./src/db/db');
+const generateResponse = require('./src/service/ai.service');
 
 connectDB();
 
@@ -17,8 +18,27 @@ const io = new Server(httpServer, {
     }
 });
 
+// Note: Remember this io is referring to server here and socket is referring to client or specific user who is connected
+
+/**
+ * There are two types of events: 
+ * 1. Inbuilt-events => These are only two events (connection, disconnect)
+ * 2. Custom Events => Can be of any number
+*/
+
+// When this connection event triggers and establishes a new connection with server then this callback executes.
 io.on('connection', (socket) => {
-        
+    console.log('A user is connected');
+    // built-in event
+    socket.on('disconnect', () => {
+        console.log("A user disconnected");
+    });
+
+    // Custom event listening
+    socket.on('ai-message', async (message) => {
+        const response = await generateResponse(message.prompt);
+        socket.emit('ai-response', { response });
+    });
 });
 
 const PORT = 3000;
