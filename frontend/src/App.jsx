@@ -42,7 +42,7 @@ function App() {
   }
 
   useEffect(() => {
-    const socketInstance = io("http://localhost:3000");
+    const socketInstance = io("https://ai-sann-bot.onrender.com/");
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setSocket(socketInstance);
 
