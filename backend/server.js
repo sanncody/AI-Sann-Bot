@@ -12,7 +12,10 @@ const generateResponse = require('./src/service/ai.service');
 const httpServer = createServer(app);
 const io = new Server(httpServer, {
     cors: {
-        origin: "https://ai-sann-bot.vercel.app/"
+        origin: [
+            "https://ai-sann-bot.vercel.app", 
+            "http://localhost:5173"
+        ]
     }
 });
 
