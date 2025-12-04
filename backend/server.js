@@ -5,10 +5,8 @@ const { createServer } = require('node:http');
 const { Server } = require('socket.io');
 
 const app = require("./src/app");
-const connectDB = require('./src/db/db');
 const generateResponse = require('./src/service/ai.service');
 
-connectDB();
 
 // Express server communicates via http protocol
 const httpServer = createServer(app);
